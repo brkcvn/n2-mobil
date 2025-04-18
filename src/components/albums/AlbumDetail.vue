@@ -1,6 +1,6 @@
 <template>
     <div class="p-4 lg:p-0 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mb-16 mt-4 lg:mt-[42px]">
-        <div @click="$emit('back')" class="flex items-center gap-6 mb-8 cursor-pointer">
+        <div @click="handleBack" class="flex items-center gap-6 mb-8 cursor-pointer">
             <ArrowLeftIcon class="w-8 h-8" />
             <span class="text-xl font-semibold text-primary_dark_blue">Go Albums</span>
         </div>
@@ -13,8 +13,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.vue';
 import BaseImage from '../BaseImage.vue';
 
@@ -25,18 +25,15 @@ interface Album {
     detailImages?: string[];
 }
 
-export default defineComponent({
-    name: 'AlbumDetail',
-    components: {
-        ArrowLeftIcon,
-        BaseImage
-    },
-    props: {
-        album: {
-            type: Object as PropType<Album>,
-            required: true
-        }
-    },
-    emits: ['back']
-});
+defineProps<{
+    album: Album
+}>();
+
+const emit = defineEmits<{
+    (e: 'back'): void
+}>();
+
+const handleBack = () => {
+    emit('back');
+};
 </script>

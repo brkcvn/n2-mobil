@@ -6,7 +6,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 my-4 lg:my-8">
                 <div v-for="album in albums" :key="album.id">
-                    <AlbumCard :album="album" @click="showAlbumDetail(album)" />
+                    <AlbumCard :album="album" @click="showAlbumDetail" />
                 </div>
             </div>
         </div>
@@ -15,8 +15,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import AlbumCard from './AlbumCard.vue';
 import AlbumDetail from './AlbumDetail.vue';
 import GoHome from '../GoHome.vue';
@@ -28,189 +28,178 @@ interface Album {
     detailImages?: string[];
 }
 
-export default defineComponent({
-    name: 'AlbumsView',
-    components: {
-        AlbumCard,
-        AlbumDetail,
-        GoHome
+const selectedAlbum = ref<Album | null>(null);
+
+const albums = ref<Album[]>([
+    {
+        id: 1,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg',
+            '/assets/albums/album5.jpg',
+            '/assets/albums/album6.jpg'
+        ]
     },
-    data() {
-        return {
-            selectedAlbum: null as Album | null,
-            albums: [
-                {
-                    id: 1,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg',
-                        '/assets/albums/album5.jpg',
-                        '/assets/albums/album6.jpg'
-                    ]
-                },
-                {
-                    id: 2,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album5.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album5.jpg',
-                        '/assets/albums/album6.jpg',
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album4.jpg'
-                    ]
-                },
-                {
-                    id: 3,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg',
-                        '/assets/albums/album5.jpg',
-                        '/assets/albums/album6.jpg',
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album1.jpg'
-                    ]
-                },
-                {
-                    id: 4,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album6.jpg',
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ]
-                },
-                {
-                    id: 5,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg',
-                        '/assets/albums/album5.jpg',
-                        '/assets/albums/album6.jpg',
-                        '/assets/albums/album7.jpg'
-                    ]
-                },
-                {
-                    id: 6,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg',
-                        '/assets/albums/album5.jpg'
-                    ]
-                },
-                {
-                    id: 7,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album4.jpg',
-                        '/assets/albums/album5.jpg',
-                        '/assets/albums/album6.jpg',
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg'
-                    ]
-                },
-                {
-                    id: 8,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album5.jpg',
-                        '/assets/albums/album6.jpg',
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg'
-                    ]
-                },
-                {
-                    id: 9,
-                    title: 'Non esse culpa molestiae omnis sed ol...',
-                    images: [
-                        '/assets/albums/album1.jpg',
-                        '/assets/albums/album2.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album4.jpg'
-                    ],
-                    detailImages: [
-                        '/assets/albums/album7.jpg',
-                        '/assets/albums/album6.jpg',
-                        '/assets/albums/album5.jpg',
-                        '/assets/albums/album4.jpg',
-                        '/assets/albums/album3.jpg',
-                        '/assets/albums/album2.jpg'
-                    ]
-                }
-            ] as Album[]
-        };
+    {
+        id: 2,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album5.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album5.jpg',
+            '/assets/albums/album6.jpg',
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album4.jpg'
+        ]
     },
-    methods: {
-        showAlbumDetail(album: Album) {
-            this.selectedAlbum = album;
-        },
-        goBackToAlbums() {
-            this.selectedAlbum = null;
-        }
+    {
+        id: 3,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg',
+            '/assets/albums/album5.jpg',
+            '/assets/albums/album6.jpg',
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album1.jpg'
+        ]
+    },
+    {
+        id: 4,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album6.jpg',
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ]
+    },
+    {
+        id: 5,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg',
+            '/assets/albums/album5.jpg',
+            '/assets/albums/album6.jpg',
+            '/assets/albums/album7.jpg'
+        ]
+    },
+    {
+        id: 6,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg',
+            '/assets/albums/album5.jpg'
+        ]
+    },
+    {
+        id: 7,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album4.jpg',
+            '/assets/albums/album5.jpg',
+            '/assets/albums/album6.jpg',
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg'
+        ]
+    },
+    {
+        id: 8,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album5.jpg',
+            '/assets/albums/album6.jpg',
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg'
+        ]
+    },
+    {
+        id: 9,
+        title: 'Non esse culpa molestiae omnis sed ol...',
+        images: [
+            '/assets/albums/album1.jpg',
+            '/assets/albums/album2.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album4.jpg'
+        ],
+        detailImages: [
+            '/assets/albums/album7.jpg',
+            '/assets/albums/album6.jpg',
+            '/assets/albums/album5.jpg',
+            '/assets/albums/album4.jpg',
+            '/assets/albums/album3.jpg',
+            '/assets/albums/album2.jpg'
+        ]
     }
-});
+]);
+
+const showAlbumDetail = (album: Album) => {
+    selectedAlbum.value = album;
+};
+
+const goBackToAlbums = () => {
+    selectedAlbum.value = null;
+};
 </script>

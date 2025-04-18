@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mt-11 lg:mb-16">
+  <div class="px-4 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mt-11 lg:mb-16">
     <h1 class="lg:text-xl font-semibold mb-4 lg:mb-[35px]">All Users</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">

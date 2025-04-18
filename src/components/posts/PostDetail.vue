@@ -10,7 +10,8 @@
                 </div>
             </div>
 
-            <div class="max-h-[600px] flex flex-col lg:flex-row items-start lg:divide-x lg:divide-primary_light_gray post-modal overflow-y-auto lg:overflow-auto">
+            <div
+                class="max-h-[600px] flex flex-col lg:flex-row items-start lg:divide-x lg:divide-primary_light_gray post-modal overflow-y-auto lg:overflow-auto">
                 <div class="post-modal w-full lg:max-h-[500px] lg:w-1/2 px-4 lg:px-8 lg:overflow-y-auto mb-5 lg:mb-10">
                     <p class="text-sm text-opacity-70 text-black tracking-wide leading-relaxed">{{ post.content }}</p>
                 </div>
@@ -33,7 +34,7 @@
                                     vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum
                                     vest...
                                 </p>
-                                
+
                             </div>
                         </div>
 
@@ -77,8 +78,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
 import CloseIcon from '../icons/CloseIcon.vue';
 
 interface Post {
@@ -87,26 +88,16 @@ interface Post {
     content: string;
 }
 
-export default defineComponent({
-    name: 'PostDetail',
-    components: {
-        CloseIcon
-    },
-    props: {
-        isOpen: {
-            type: Boolean,
-            required: true
-        },
-        post: {
-            type: Object as PropType<Post>,
-            required: true
-        }
-    },
-    emits: ['close'],
-    methods: {
-        closeDetail() {
-            this.$emit('close');
-        }
-    }
-});
+defineProps<{
+    isOpen: boolean;
+    post: Post;
+}>();
+
+const emit = defineEmits<{
+    (e: 'close'): void
+}>();
+
+const closeDetail = () => {
+    emit('close');
+};
 </script>

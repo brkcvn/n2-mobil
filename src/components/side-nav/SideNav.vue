@@ -34,8 +34,7 @@
       <SideNavItem url="posts" :icon="NotebookIcon" />
       <SideNavItem url="albums" :icon="PhotoHeartIcon" />
     </template>
-
-    <RouterLink to="/" class="absolute bottom-8 left-0 right-0 border-t border-primary_light_gray pt-6 px-4">
+    <RouterLink to="/" class="absolute bottom-8 left-4 right-4 pt-6 border-t-2 border-primary_light_gray flex items-center justify-center gap-2">
       <BaseImage src="assets/images/logo.png" alt="logo" />
     </RouterLink>
   </nav>
