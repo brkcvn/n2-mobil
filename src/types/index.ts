@@ -47,7 +47,8 @@ export interface UserProps {
     name: string;
     catchPhrase: string;
     bs: string;
-  }
+  },
+  avatar: string;
 }
 
 export interface TodoProps {

@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import clsx from 'clsx';
 import { RouterLink } from 'vue-router';
@@ -51,11 +51,11 @@ import CheckupListIcon from '../icons/CheckupListIcon.vue';
 import NotebookIcon from '../icons/NotebookIcon.vue';
 import PhotoHeartIcon from '../icons/PhotoHeartIcon.vue';
 import BaseImage from '../BaseImage.vue';
-import { User } from '@/types';
+import { UserProps } from '@/types';
 
 const props = defineProps<{
   isOpen?: boolean;
-  users?: User[];
+  users?: UserProps[];
 }>();
 
 const route = useRoute();
@@ -79,7 +79,7 @@ const userAvatar = ref('');
 watch(() => route.params, (params) => {
   userId.value = params?.id as string;
 
-  const user = props?.users?.find(user => user?.id === userId?.value);
+  const user = props?.users?.find(user => String(user?.id) === userId?.value);
   if (user) {
     userName.value = user.name;
     userEmail.value = user.email;

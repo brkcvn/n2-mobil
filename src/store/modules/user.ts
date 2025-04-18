@@ -16,7 +16,22 @@ export default {
     }),
 
     getters: {
-        getUsers: (state: StateProps) => state.users,
+        getUsers: (state: StateProps) => {
+            if (!state.users || state.users.length === 0) {
+              return [];
+            }
+            
+            return state.users.map((user, index) => ({
+              id: user.id.toString(),
+              name: user.name,
+              email: user.email,
+              phone: user.phone,
+              avatar: `assets/images/user-${(user.id % 3 || index % 2) + 1}.png`,
+              location: user.address ? `${user.address.street}\n${user.address.city}` : 'No address',
+              company: user.company ? user.company.name : 'No company',
+              website: user.website
+            }));
+          },
         getSelectedUser: (state: StateProps) => state.selectedUser,
         getUserTodos: (state: StateProps) => state.userTodos,
         getUserPosts: (state: StateProps) => state.userPosts,
