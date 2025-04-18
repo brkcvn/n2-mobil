@@ -23,19 +23,14 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
 import BaseImage from '../BaseImage.vue';
-
-interface Album {
-    id: number;
-    title: string;
-    images: string[];
-}
+import { AlbumViewProps } from '../../types';
 
 const props = defineProps<{
-    album: Album
+    album: AlbumViewProps
 }>();
 
 const emit = defineEmits<{
-    (e: 'click', album: Album): void
+    (e: 'click', album: AlbumViewProps): void
 }>();
 
 const handleClick = () => {

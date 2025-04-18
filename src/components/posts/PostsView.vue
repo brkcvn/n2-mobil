@@ -10,14 +10,11 @@
 import { ref } from 'vue';
 import PostCard from './PostCard.vue';
 import GoHome from '../GoHome.vue';
+import { PostViewProps } from '../../types';
 
-interface Post {
-  id: number;
-  title: string;
-  content: string;
-}
 
-const posts = ref<Post[]>([
+
+const posts = ref<PostViewProps[]>([
   {
     id: 1,
     title: 'Post Title',

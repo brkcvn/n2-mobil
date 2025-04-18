@@ -17,16 +17,10 @@
 import { defineProps, defineEmits } from 'vue';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon.vue';
 import BaseImage from '../BaseImage.vue';
-
-interface Album {
-    id: number;
-    title: string;
-    images: string[];
-    detailImages?: string[];
-}
+import { AlbumViewProps } from '../../types';
 
 defineProps<{
-    album: Album
+    album: AlbumViewProps
 }>();
 
 const emit = defineEmits<{

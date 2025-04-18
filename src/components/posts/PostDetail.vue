@@ -81,16 +81,13 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
 import CloseIcon from '../icons/CloseIcon.vue';
+import type { PostDetailProps } from '../../types';
 
-interface Post {
-    id: number;
-    title: string;
-    content: string;
-}
+
 
 defineProps<{
     isOpen: boolean;
-    post: Post;
+    post: PostDetailProps;
 }>();
 
 const emit = defineEmits<{

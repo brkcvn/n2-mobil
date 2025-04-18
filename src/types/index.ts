@@ -1,17 +1,90 @@
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  avatar?: string;
-  location: string;
-  company: string;
-  website: string;
+export interface BaseImageProps {
+  src: string;
+  alt?: string;
+  wrapperClass?: string;
+  imageClass?: string;
+  showFallback?: boolean;
+  fallbackSrc?: string;
 }
 
-export interface Todo {
-  id: string;
-  userId: string;
+export interface PostViewProps {
+  id: number;
+  title: string;
+  content: string;
+}
+
+export interface PostDetailProps {
+  id: number;
+  title: string;
+  content: string;
+}
+
+export interface AlbumViewProps {
+  id: number;
+  title: string;
+  images: string[];
+  detailImages?: string[];
+}
+
+export interface UserProps {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+    geo: {
+      lat: string;
+      lng: string;
+    }
+  };
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+  }
+}
+
+export interface TodoProps {
+  userId: number;
+  id: number;
   title: string;
   completed: boolean;
+}
+
+export interface PostProps {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
+
+export interface CommentProps {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
+}
+
+export interface AlbumProps {
+  userId: number;
+  id: number;
+  title: string;
+}
+
+export interface StateProps {
+  users: UserProps[];
+  selectedUser: UserProps | null;
+  userTodos:  TodoProps[];
+  userPosts:  PostProps[];
+  userComments: CommentProps[];
+  userAlbums: AlbumProps[];
+  loading: boolean;
+  error: string | null;
 }

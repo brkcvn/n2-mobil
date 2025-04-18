@@ -25,18 +25,12 @@
 </template>
 
 <script setup lang="ts">
+import { BaseImageProps } from '../types';
 import { computed, ref } from 'vue';
 
-interface Props {
-    src: string;
-    alt?: string;
-    wrapperClass?: string;
-    imageClass?: string;
-    showFallback?: boolean;
-    fallbackSrc?: string;
-}
 
-const props = withDefaults(defineProps<Props>(), {
+
+const props = withDefaults(defineProps<BaseImageProps>(), {
     alt: '',
     wrapperClass: '',
     imageClass: 'w-full h-full object-cover',

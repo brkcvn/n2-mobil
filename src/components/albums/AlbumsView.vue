@@ -20,17 +20,13 @@ import { ref } from 'vue';
 import AlbumCard from './AlbumCard.vue';
 import AlbumDetail from './AlbumDetail.vue';
 import GoHome from '../GoHome.vue';
+import { AlbumViewProps } from '../../types';
 
-interface Album {
-    id: number;
-    title: string;
-    images: string[];
-    detailImages?: string[];
-}
 
-const selectedAlbum = ref<Album | null>(null);
 
-const albums = ref<Album[]>([
+const selectedAlbum = ref<AlbumViewProps | null>(null);
+
+const albums = ref<AlbumViewProps[]>([
     {
         id: 1,
         title: 'Non esse culpa molestiae omnis sed ol...',
@@ -195,7 +191,7 @@ const albums = ref<Album[]>([
     }
 ]);
 
-const showAlbumDetail = (album: Album) => {
+const showAlbumDetail = (album: AlbumViewProps) => {
     selectedAlbum.value = album;
 };
 
