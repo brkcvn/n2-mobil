@@ -21,7 +21,7 @@ const mockUsers: User[] = [
     name: 'Jane Doe',
     email: 'jane@lorem.com',
     phone: '+90 555 678 12 23',
-    avatar: 'src/assets/images/user-first.png',
+    avatar: 'assets/images/user-first.png',
     location: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     company: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     website: 'jane.doe.com'
@@ -31,7 +31,7 @@ const mockUsers: User[] = [
     name: 'John Doe',
     email: 'john@lorem.com',
     phone: '+90 555 678 12 23',
-    avatar: 'src/assets/images/user-second.png',
+    avatar: 'assets/images/user-second.png',
     location: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     company: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     website: 'john.doe.com'
@@ -41,7 +41,7 @@ const mockUsers: User[] = [
     name: 'Nazlı UYSAL',
     email: 'nazli.uysal@lorem.com',
     phone: '+90 555 678 12 23',
-    avatar: 'src/assets/images/user-third.png',
+    avatar: 'assets/images/user-third.png',
     location: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     company: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     website: 'nazli.uysal.com'
@@ -51,7 +51,7 @@ const mockUsers: User[] = [
     name: 'Jane Doe',
     email: 'jane@lorem.com',
     phone: '+90 555 678 12 23',
-    avatar: 'src/assets/images/user-first.png',
+    avatar: 'assets/images/user-first.png',
     location: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     company: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     website: 'jane.doe.com'
@@ -61,7 +61,7 @@ const mockUsers: User[] = [
     name: 'John Doe',
     email: 'john@lorem.com',
     phone: '+90 555 678 12 23',
-    avatar: 'src/assets/images/user-second.png',
+    avatar: 'assets/images/user-second.png',
     location: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     company: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     website: 'john.doe.com'
@@ -71,7 +71,7 @@ const mockUsers: User[] = [
     name: 'Nazlı UYSAL',
     email: 'nazli.uysal@lorem.com',
     phone: '+90 555 678 12 23',
-    avatar: 'src/assets/images/user-third.png',
+    avatar: 'assets/images/user-third.png',
     location: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     company: 'Timko sokak no:2\nYeni Mahalle / Ankara',
     website: 'nazli.uysal.com'

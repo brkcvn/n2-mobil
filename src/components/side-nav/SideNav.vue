@@ -17,14 +17,14 @@
     </template>
 
     <template v-if="showUserDetailMenu">
-      <div class="flex flex-col gap-5 mb-5 px-4">
+      <div class="flex flex-col gap-5 mb-10 px-4 mt-4 lg:mt-8">
         <div class="flex items-center gap-4">
-          <div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-            <img :src="userAvatar" :alt="userName" class="w-full h-full object-cover" />
+          <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+            <BaseImage :src="userAvatar" :alt="userName" class="w-full h-full object-cover" />
           </div>
           <div class="flex flex-col">
-            <h3 class="text-lg font-medium text-primary_dark_blue">{{ userName }}</h3>
-            <p class="text-sm text-primary_gray">{{ userEmail }}</p>
+            <h3 class="text-sm lg:text-lg font-medium text-primary_dark_blue">{{ userName }}</h3>
+            <a :href="`mailto:${userEmail}`" class="text-xs lg:text-sm text-primary_gray border-b-2">{{ userEmail }}</a>
           </div>
         </div>
         <div class="border-b border-primary_light_gray"></div>
@@ -36,21 +36,22 @@
     </template>
 
     <RouterLink to="/" class="absolute bottom-8 left-0 right-0 border-t border-primary_light_gray pt-6 px-4">
-      <img src="../../assets/images/logo.png" alt="logo" />
+      <BaseImage src="assets/images/logo.png" alt="logo" />
     </RouterLink>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import clsx from 'clsx';
-import UsersIcon from '../icons/UsersIcon.vue';
 import { RouterLink } from 'vue-router';
+import UsersIcon from '../icons/UsersIcon.vue';
 import SideNavItem from './SideNavItem.vue';
 import CheckupListIcon from '../icons/CheckupListIcon.vue';
 import NotebookIcon from '../icons/NotebookIcon.vue';
 import PhotoHeartIcon from '../icons/PhotoHeartIcon.vue';
+import BaseImage from '../BaseImage.vue';
 import { User } from '@/types';
 
 const props = defineProps<{
@@ -70,18 +71,20 @@ const showUserDetailMenu = computed(() => {
     currentActiveMenu === 'albums';
 });
 
-const userId = route.params.id as string;
+const userId = ref('');
 const userName = ref('');
 const userEmail = ref('');
 const userAvatar = ref('');
 
-onMounted(() => {
-  const user = props?.users?.find(user => user.id === userId);
+
+watch(() => route.params, (params) => {
+  userId.value = params?.id as string;
+
+  const user = props?.users?.find(user => user?.id === userId?.value);
   if (user) {
     userName.value = user.name;
     userEmail.value = user.email;
-    userAvatar.value = user.avatar;
+    userAvatar.value = user.avatar.startsWith('/') ? user.avatar : `/assets/images/${user.avatar}`;
   }
-});
-
+}, { immediate: true, deep: true });
 </script>

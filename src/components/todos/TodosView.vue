@@ -1,13 +1,14 @@
 <template>
-    <div class="p-4 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mt-11 lg:mb-16">
-        <div class="bg-white border border-primary_light_gray rounded-xl p-6">
+    <div class="p-4 lg:p-0 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mb-16 mt-4 lg:mt-[42px]">
+        <div class="flex items-center gap-6 cursor-pointer mb-6 lg:mb-[80px]" @click="goHome">
+            <ArrowLeftIcon class="w-8 h-8" />
+            <span class="text-xl font-semibold">Go Home</span>
+        </div>
+
+        <div class="">
             <div class="flex flex-col gap-4">
                 <TodoItem v-for="(todo, index) in todos" :key="index" :todo="todo" @toggle="toggleTodoStatus(index)" />
             </div>
-        </div>
-
-        <div class="flex items-center gap-6 mt-8 cursor-pointer" @click="goHome">
-            <span class="text-xl font-semibold text-primary_dark_blue">Go Home</span>
         </div>
     </div>
 </template>
@@ -16,6 +17,7 @@
 import { ref, onMounted, provide } from 'vue';
 import { useRouter } from 'vue-router';
 import TodoItem from './TodoItem.vue';
+import ArrowLeftIcon from '../icons/ArrowLeftIcon.vue';
 
 const router = useRouter();
 

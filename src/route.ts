@@ -12,13 +12,11 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: UserView,
-            props: true
         },
         {
             path: '/users/:id/todos',
             name: 'todos',
             component: TodosView,
-            props: true
         },
         {
             path: '/users/:id/posts',

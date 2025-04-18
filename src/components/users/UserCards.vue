@@ -4,7 +4,7 @@
     <div class="flex flex-col gap-8">
       <div class="flex gap-4">
         <div class="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
-          <img :src="user.avatar || ''" :alt="user.name" class="w-full h-full object-cover" />
+          <BaseImage :src="user.avatar || ''" :alt="user.name" class="w-full h-full object-cover" />
         </div>
         <div class="flex flex-col">
           <h3 class="lg:text-lg font-medium text-primary_dark_blue">{{ user.name }}</h3>
@@ -48,6 +48,7 @@ import { User } from '../types';
 import BuildingSkycrapperIcon from '../icons/BuildingSkycrapperIcon.vue';
 import MapHeartIcon from '../icons/MapHeartIcon.vue';
 import WorldShareIcon from '../icons/WorldShareIcon.vue';
+import BaseImage from '../BaseImage.vue';
 
 defineProps<{
   user: User;
