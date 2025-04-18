@@ -22,7 +22,6 @@ const router = createRouter({
             path: '/users/:id/posts',
             name: 'posts',
             component: PostsView,
-            props: true
         },
         {
             path: '/users/:id/albums',

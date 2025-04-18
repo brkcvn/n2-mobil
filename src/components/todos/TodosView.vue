@@ -2,19 +2,16 @@
     <div class="p-4 lg:p-0 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mb-16 mt-4 lg:mt-[42px]">
         <GoHome />
 
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 mt-6 lg:mt-[80px]">
             <TodoItem v-for="(todo, index) in todos" :key="index" :todo="todo" @toggle="toggleTodoStatus(index)" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, provide } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, provide } from 'vue';
 import TodoItem from './TodoItem.vue';
 import GoHome from '../GoHome.vue';
-
-const router = useRouter();
 
 provide('activeMenu', 'todos');
 
@@ -36,4 +33,8 @@ const todos = ref([
     { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum Sed ut', completed: false },
     { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque Sed ut', completed: false }
 ]);
+
+const toggleTodoStatus = (index: number) => {
+    todos.value[index].completed = !todos.value[index].completed;
+};
 </script>

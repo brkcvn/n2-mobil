@@ -4,11 +4,11 @@
       class="lg:hidden fixed top-2 ltr:right-4 rtl:left-4 z-50 bg-white p-2 rounded-md shadow-md focus:outline-none"
       aria-label="Toggle menu">
       <div class="w-6 h-5 flex flex-col justify-between">
-        <span class="w-full h-0.5 bg-primary_dark_blue block transition-all duration-300"
+        <span class="w-full h-0.5 bg-primary_black block transition-all duration-300"
           :class="{ 'rotate-45 mt-[7px]': isOpen }"></span>
-        <span class="w-full h-0.5 bg-primary_dark_blue block transition-all duration-300"
+        <span class="w-full h-0.5 bg-primary_black block transition-all duration-300"
           :class="{ 'opacity-0': isOpen }"></span>
-        <span class="w-full h-0.5 bg-primary_dark_blue block transition-all duration-300"
+        <span class="w-full h-0.5 bg-primary_black block transition-all duration-300"
           :class="{ '-rotate-45 mb-[10px]': isOpen }"></span>
       </div>
     </button>

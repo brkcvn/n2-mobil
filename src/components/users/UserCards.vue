@@ -7,7 +7,7 @@
           <BaseImage :src="user.avatar || ''" :alt="user.name" class="w-full h-full object-cover" />
         </div>
         <div class="flex flex-col">
-          <h3 class="lg:text-lg font-medium text-primary_dark_blue">{{ user.name }}</h3>
+          <h3 class="lg:text-lg font-medium text-primary_black">{{ user.name }}</h3>
           <p class="text-sm text-primary_gray">{{ user.email }}</p>
           <p class="text-sm text-primary_gray">{{ user.phone }}</p>
         </div>
@@ -18,7 +18,7 @@
           <div class="flex items-center gap-x-4">
             <MapHeartIcon />
 
-            <span class="text-sm font-medium text-primary_dark_blue">Location</span>
+            <span class="text-sm font-medium text-primary_black">Location</span>
           </div>
           <p class="text-sm text-primary_gray whitespace-pre-line font-light">{{ user.location }}</p>
         </div>
@@ -26,7 +26,7 @@
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-x-4">
             <BuildingSkycrapperIcon />
-            <span class="text-sm font-medium text-primary_dark_blue">Company</span>
+            <span class="text-sm font-medium text-primary_black">Company</span>
           </div>
           <p class="text-sm text-primary_gray whitespace-pre-line font-light">{{ user.company }}</p>
         </div>
@@ -34,7 +34,7 @@
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-x-4">
             <WorldShareIcon />
-            <span class="text-sm font-medium text-primary_dark_blue">Website</span>
+            <span class="text-sm font-medium text-primary_black">Website</span>
           </div>
           <p class="text-sm text-primary_gray font-light">{{ user.website }}</p>
         </div>
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { User } from '../types';
+import { User } from '../../types';
 import BuildingSkycrapperIcon from '../icons/BuildingSkycrapperIcon.vue';
 import MapHeartIcon from '../icons/MapHeartIcon.vue';
 import WorldShareIcon from '../icons/WorldShareIcon.vue';

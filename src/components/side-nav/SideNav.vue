@@ -23,7 +23,7 @@
             <BaseImage :src="userAvatar" :alt="userName" class="w-full h-full object-cover" />
           </div>
           <div class="flex flex-col">
-            <h3 class="text-sm lg:text-lg font-medium text-primary_dark_blue">{{ userName }}</h3>
+            <h3 class="text-sm lg:text-lg font-medium text-primary_black">{{ userName }}</h3>
             <a :href="`mailto:${userEmail}`" class="text-xs lg:text-sm text-primary_gray border-b-2">{{ userEmail }}</a>
           </div>
         </div>
