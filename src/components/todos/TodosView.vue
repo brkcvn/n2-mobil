@@ -9,11 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide } from 'vue';
+import { ref } from 'vue';
 import TodoItem from './TodoItem.vue';
 import GoHome from '../GoHome.vue';
-
-provide('activeMenu', 'todos');
 
 const todos = ref([
     { text: 'Curabitur tempor quis eros tempus lacinia.', completed: true },

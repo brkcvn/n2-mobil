@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col justify-end items-end mt-3 lg:mt-6 px-4 lg:px-8 pb-5 border-b border-primary_light_gray">
+    <div class="flex flex-col justify-end items-end mt-3 lg:mt-6 px-4 lg:px-8 pt-5 lg:pt-0 pb-5 border-b border-primary_light_gray">
         <div class="w-full">
             <h2 class="lg:text-lg font-medium text-primary_black tracking-wide mb-2">{{ title }}</h2>
             <p class="text-sm lg:max-w-xl text-sm text-opacity-70 text-black tracking-wide leading-relaxed">{{ content
