@@ -1,0 +1,42 @@
+<template>
+    <div class="p-4 lg:p-0 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mb-16 mt-4 lg:mt-[42px]">
+        <div @click="$emit('back')" class="flex items-center gap-6 mb-8 cursor-pointer">
+            <ArrowLeftIcon class="w-8 h-8" />
+            <span class="text-xl font-semibold text-primary_dark_blue">Go Albums</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+            <div v-for="(image, index) in album.detailImages" :key="index" class="aspect-square overflow-hidden">
+                <BaseImage :src="image" :alt="`Album image ${index + 1}`" class="w-full h-full" />
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
+import ArrowLeftIcon from '../icons/ArrowLeftIcon.vue';
+import BaseImage from '../BaseImage.vue';
+
+interface Album {
+    id: number;
+    title: string;
+    images: string[];
+    detailImages?: string[];
+}
+
+export default defineComponent({
+    name: 'AlbumDetail',
+    components: {
+        ArrowLeftIcon,
+        BaseImage
+    },
+    props: {
+        album: {
+            type: Object as PropType<Album>,
+            required: true
+        }
+    },
+    emits: ['back']
+});
+</script>

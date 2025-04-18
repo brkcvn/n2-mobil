@@ -1,34 +1,43 @@
 <template>
-    <div class="p-4 lg:p-0 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mb-16 mt-4 lg:mt-[42px]">
-        <GoHome />
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 my-4 lg:my-8">
-            <div v-for="album in albums" :key="album.id">
-                <AlbumCard :album="album" />
+    <div>
+        <div v-if="!selectedAlbum"
+            class="p-4 lg:p-0 lg:ltr:ml-[278px] lg:rtl:mr-[278px] lg:ltr:pr-7 lg:rtl:pl-7 lg:mb-16 mt-4 lg:mt-[42px]">
+            <GoHome />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 my-4 lg:my-8">
+                <div v-for="album in albums" :key="album.id">
+                    <AlbumCard :album="album" @click="showAlbumDetail(album)" />
+                </div>
             </div>
         </div>
+
+        <AlbumDetail v-if="selectedAlbum" :album="selectedAlbum" @back="goBackToAlbums" />
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AlbumCard from './AlbumCard.vue';
+import AlbumDetail from './AlbumDetail.vue';
 import GoHome from '../GoHome.vue';
 
 interface Album {
     id: number;
     title: string;
     images: string[];
+    detailImages?: string[];
 }
 
 export default defineComponent({
     name: 'AlbumsView',
     components: {
         AlbumCard,
+        AlbumDetail,
         GoHome
     },
     data() {
         return {
+            selectedAlbum: null as Album | null,
             albums: [
                 {
                     id: 1,
@@ -38,6 +47,14 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album1.jpg',
+                        '/assets/albums/album2.jpg',
+                        '/assets/albums/album3.jpg',
+                        '/assets/albums/album4.jpg',
+                        '/assets/albums/album5.jpg',
+                        '/assets/albums/album6.jpg'
                     ]
                 },
                 {
@@ -48,6 +65,14 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album5.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album1.jpg',
+                        '/assets/albums/album2.jpg',
+                        '/assets/albums/album5.jpg',
+                        '/assets/albums/album6.jpg',
+                        '/assets/albums/album7.jpg',
+                        '/assets/albums/album4.jpg'
                     ]
                 },
                 {
@@ -58,12 +83,28 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album3.jpg',
+                        '/assets/albums/album4.jpg',
+                        '/assets/albums/album5.jpg',
+                        '/assets/albums/album6.jpg',
+                        '/assets/albums/album7.jpg',
+                        '/assets/albums/album1.jpg'
                     ]
                 },
                 {
                     id: 4,
                     title: 'Non esse culpa molestiae omnis sed ol...',
                     images: [
+                        '/assets/albums/album1.jpg',
+                        '/assets/albums/album2.jpg',
+                        '/assets/albums/album3.jpg',
+                        '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album6.jpg',
+                        '/assets/albums/album7.jpg',
                         '/assets/albums/album1.jpg',
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
@@ -78,6 +119,14 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album2.jpg',
+                        '/assets/albums/album3.jpg',
+                        '/assets/albums/album4.jpg',
+                        '/assets/albums/album5.jpg',
+                        '/assets/albums/album6.jpg',
+                        '/assets/albums/album7.jpg'
                     ]
                 },
                 {
@@ -88,6 +137,14 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album7.jpg',
+                        '/assets/albums/album1.jpg',
+                        '/assets/albums/album2.jpg',
+                        '/assets/albums/album3.jpg',
+                        '/assets/albums/album4.jpg',
+                        '/assets/albums/album5.jpg'
                     ]
                 },
                 {
@@ -98,6 +155,14 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album4.jpg',
+                        '/assets/albums/album5.jpg',
+                        '/assets/albums/album6.jpg',
+                        '/assets/albums/album7.jpg',
+                        '/assets/albums/album1.jpg',
+                        '/assets/albums/album2.jpg'
                     ]
                 },
                 {
@@ -108,6 +173,14 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album5.jpg',
+                        '/assets/albums/album6.jpg',
+                        '/assets/albums/album7.jpg',
+                        '/assets/albums/album1.jpg',
+                        '/assets/albums/album2.jpg',
+                        '/assets/albums/album3.jpg'
                     ]
                 },
                 {
@@ -118,10 +191,26 @@ export default defineComponent({
                         '/assets/albums/album2.jpg',
                         '/assets/albums/album3.jpg',
                         '/assets/albums/album4.jpg'
+                    ],
+                    detailImages: [
+                        '/assets/albums/album7.jpg',
+                        '/assets/albums/album6.jpg',
+                        '/assets/albums/album5.jpg',
+                        '/assets/albums/album4.jpg',
+                        '/assets/albums/album3.jpg',
+                        '/assets/albums/album2.jpg'
                     ]
                 }
             ] as Album[]
         };
+    },
+    methods: {
+        showAlbumDetail(album: Album) {
+            this.selectedAlbum = album;
+        },
+        goBackToAlbums() {
+            this.selectedAlbum = null;
+        }
     }
 });
 </script>
