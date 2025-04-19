@@ -18,22 +18,32 @@ export default {
     getters: {
         getUsers: (state: StateProps) => {
             if (!state.users || state.users.length === 0) {
-              return [];
+                return [];
             }
-            
+
             return state.users.map((user, index) => ({
-              id: user.id.toString(),
-              name: user.name,
-              email: user.email,
-              phone: user.phone,
-              avatar: `assets/images/user-${(user.id % 3 || index % 2) + 1}.png`,
-              location: user.address ? `${user.address.street}\n${user.address.city}` : 'No address',
-              company: user.company ? user.company.name : 'No company',
-              website: user.website
+                id: user?.id,
+                name: user?.name,
+                email: user?.email,
+                phone: user?.phone,
+                avatar: `assets/images/user-${(user?.id % 3 || index % 2) + 1}.png`,
+                location: user?.address ? `${user?.address?.street}\n${user?.address?.city}` : 'No address',
+                company: user?.company ? user?.company?.name : 'No company',
+                website: user?.website
             }));
-          },
-        getSelectedUser: (state: StateProps) => state.selectedUser,
-        getUserTodos: (state: StateProps) => state.userTodos,
+        },
+        getUserTodos: (state: StateProps) => {
+            if (!state.userTodos || state.userTodos.length === 0) {
+                return [];
+            }
+
+            return state.userTodos.map((todo) => ({
+                userId: todo?.userId,
+                id: todo?.id,
+                title: todo?.title,
+                completed: todo?.completed,
+            }));
+        },
         getUserPosts: (state: StateProps) => state.userPosts,
         getUserComments: (state: StateProps) => state.userComments,
         getUserAlbums: (state: StateProps) => state.userAlbums,
@@ -44,9 +54,6 @@ export default {
     mutations: {
         SET_USERS(state: StateProps, users: UserProps[]) {
             state.users = users;
-        },
-        SET_SELECTED_USER(state: StateProps, user: UserProps) {
-            state.selectedUser = user;
         },
         SET_USER_TODOS(state: StateProps, todos: TodoProps[]) {
             state.userTodos = todos;
@@ -65,7 +72,15 @@ export default {
         },
         SET_ERROR(state: StateProps, error: string | null) {
             state.error = error;
-        }
+        },
+        TOGGLE_TODO_STATUS(state: StateProps, todoId: number) {
+            state.userTodos = state.userTodos.map(todo => {
+                if (todo.id === todoId) {
+                    return { ...todo, completed: !todo.completed };
+                }
+                return todo;
+            });
+        },
     },
 
     actions: {
@@ -83,23 +98,13 @@ export default {
             }
         },
 
-        async selectUser({ commit, dispatch }, user: UserProps) {
-            commit('SET_SELECTED_USER', user);
-            await Promise.all([
-                dispatch('fetchUserTodos'),
-                dispatch('fetchUserPosts'),
-                dispatch('fetchUserComments'),
-                dispatch('fetchUserAlbums')
-            ]);
-        },
-
-        async fetchUserTodos({ commit, state }) {
-            if (!state.selectedUser) return;
-
+        async fetchUserTodosByUserId({ commit }, userId) {
             try {
                 commit('SET_LOADING', true);
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?userId=${state.selectedUser.id}`);
-                commit('SET_USER_TODOS', response.data);
+                commit('SET_ERROR', null);
+
+                const todosResponse = await axios.get(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`);
+                commit('SET_USER_TODOS', todosResponse.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch user todos');
                 console.error('Error fetching user todos:', error);
@@ -164,6 +169,15 @@ export default {
             } finally {
                 commit('SET_LOADING', false);
             }
-        }
+        },
+
+        async toggleTodoStatus({ commit }, todoId: number) {
+            try {
+                commit('TOGGLE_TODO_STATUS', todoId);
+            } catch (error) {
+                commit('SET_ERROR', 'Failed to update todo status');
+                console.error('Error updating todo status:', error);
+            }
+        },
     }
 };

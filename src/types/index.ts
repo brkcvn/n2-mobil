@@ -1,6 +1,6 @@
 export interface BaseImageProps {
   src: string;
-  alt?: string;
+  alt: string;
   wrapperClass?: string;
   imageClass?: string;
   showFallback?: boolean;
@@ -49,6 +49,7 @@ export interface UserProps {
     bs: string;
   },
   avatar: string;
+  location: string;
 }
 
 export interface TodoProps {

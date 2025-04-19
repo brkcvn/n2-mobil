@@ -28,9 +28,8 @@
 import { BaseImageProps } from '../types';
 import { computed, ref } from 'vue';
 
-
-
 const props = withDefaults(defineProps<BaseImageProps>(), {
+    src: '',
     alt: '',
     wrapperClass: '',
     imageClass: 'w-full h-full object-cover',

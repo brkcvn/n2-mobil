@@ -27,12 +27,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import SideNav from './SideNav.vue';
-import { User } from '@/types';
+import { UserProps } from '@/types';
 
 const isOpen = ref(false);
 
 defineProps<{
-  users?: User[];
+  users?: UserProps[];
 }>();
 
 const toggleMenu = () => {

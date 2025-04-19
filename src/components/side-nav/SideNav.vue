@@ -83,7 +83,7 @@ watch(() => route.params, (params) => {
   if (user) {
     userName.value = user.name;
     userEmail.value = user.email;
-    userAvatar.value = user.avatar.startsWith('/') ? user.avatar : `/assets/images/${user.avatar}`;
+    userAvatar.value = user.avatar
   }
 }, { immediate: true, deep: true });
 </script>

@@ -3,36 +3,36 @@
         <GoHome />
 
         <div class="flex flex-col gap-4 mt-6 lg:mt-[80px]">
-            <TodoItem v-for="(todo, index) in todos" :key="index" :todo="todo" @toggle="toggleTodoStatus(index)" />
+            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" @toggle="toggleTodoStatus(todo.id)" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import TodoItem from './TodoItem.vue';
 import GoHome from '../GoHome.vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
-const todos = ref([
-    { text: 'Curabitur tempor quis eros tempus lacinia.', completed: true },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque.', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nama convallis. Sed ut', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibend Sed ut', completed: true },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque Sed ut', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque Sed ut', completed: true },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque Sed ut', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque Sed ut', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque Sed ut', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Sed ut', completed: true },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum Sed ut', completed: false },
-    { text: 'Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque Sed ut', completed: false }
-]);
+const store = useStore();
+const route = useRoute();
+const userId = computed(() => route.params.id);
+const todos = computed(() => store.getters['user/getUserTodos']);
 
-const toggleTodoStatus = (index: number) => {
-    todos.value[index].completed = !todos.value[index].completed;
+onMounted(async () => {
+    await fetchTodosForUser();
+});
+
+const fetchTodosForUser = async () => {
+    try {
+        await store.dispatch('user/fetchUserTodosByUserId', userId?.value);
+    } catch (err) {
+        console.error('Error fetching todos:', err);
+    }
+};
+
+const toggleTodoStatus = (todoId: number) => {
+    store.dispatch('user/toggleTodoStatus', todoId);
 };
 </script>

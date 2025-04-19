@@ -4,12 +4,12 @@
     <div class="flex flex-col gap-8">
       <div class="flex gap-4">
         <div class="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
-          <BaseImage :src="user.avatar || ''" :alt="user.name" class="w-full h-full object-cover" />
+          <BaseImage :src="user?.avatar || ''" :alt="user?.name" class="w-full h-full object-cover" />
         </div>
         <div class="flex flex-col">
-          <h3 class="lg:text-lg font-medium text-primary_black">{{ user.name }}</h3>
-          <p class="text-sm text-primary_gray">{{ user.email }}</p>
-          <p class="text-sm text-primary_gray">{{ user.phone }}</p>
+          <h3 class="lg:text-lg font-medium text-primary_black">{{ user?.name }}</h3>
+          <p class="text-sm text-primary_gray">{{ user?.email }}</p>
+          <p class="text-sm text-primary_gray">{{ user?.phone }}</p>
         </div>
       </div>
 
@@ -20,7 +20,7 @@
 
             <span class="text-sm font-medium text-primary_black">Location</span>
           </div>
-          <p class="text-sm text-primary_gray whitespace-pre-line font-light">{{ user.location }}</p>
+          <p class="text-sm text-primary_gray whitespace-pre-line font-light">{{ user?.location }}</p>
         </div>
 
         <div class="flex flex-col gap-1">
@@ -28,7 +28,7 @@
             <BuildingSkycrapperIcon />
             <span class="text-sm font-medium text-primary_black">Company</span>
           </div>
-          <p class="text-sm text-primary_gray whitespace-pre-line font-light">{{ user.company }}</p>
+          <p class="text-sm text-primary_gray whitespace-pre-line font-light">{{ user?.company }}</p>
         </div>
 
         <div class="flex flex-col gap-1">
@@ -36,7 +36,7 @@
             <WorldShareIcon />
             <span class="text-sm font-medium text-primary_black">Website</span>
           </div>
-          <p class="text-sm text-primary_gray font-light">{{ user.website }}</p>
+          <p class="text-sm text-primary_gray font-light">{{ user?.website }}</p>
         </div>
       </div>
     </div>
@@ -44,13 +44,13 @@
 </template>
 
 <script setup lang="ts">
-import { User } from '../../types';
+import { UserProps } from '../../types';
 import BuildingSkycrapperIcon from '../icons/BuildingSkycrapperIcon.vue';
 import MapHeartIcon from '../icons/MapHeartIcon.vue';
 import WorldShareIcon from '../icons/WorldShareIcon.vue';
 import BaseImage from '../BaseImage.vue';
 
 defineProps<{
-  user: User;
+  user: UserProps;
 }>();
 </script>

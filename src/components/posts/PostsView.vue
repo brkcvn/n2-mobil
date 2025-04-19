@@ -13,7 +13,6 @@ import GoHome from '../GoHome.vue';
 import { PostViewProps } from '../../types';
 
 
-
 const posts = ref<PostViewProps[]>([
   {
     id: 1,

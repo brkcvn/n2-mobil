@@ -11,8 +11,6 @@ import ArrowLeftIcon from './icons/ArrowLeftIcon.vue';
 
 const router = useRouter();
 
-
-
 const goHome = () => {
     router.push('/');
 };

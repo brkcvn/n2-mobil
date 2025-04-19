@@ -19,12 +19,9 @@
 import { ref, computed } from 'vue';
 import PostDetail from './PostDetail.vue';
 import ArrowRightIcon from '../icons/ArrowRightIcon.vue';
+import { PostViewProps } from '../../types';
 
-const props = defineProps<{
-    title: string;
-    content: string;
-    id: number;
-}>();
+const props = defineProps<PostViewProps>();
 
 const isDetailOpen = ref(false);
 

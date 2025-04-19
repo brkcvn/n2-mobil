@@ -22,8 +22,6 @@ import AlbumDetail from './AlbumDetail.vue';
 import GoHome from '../GoHome.vue';
 import { AlbumViewProps } from '../../types';
 
-
-
 const selectedAlbum = ref<AlbumViewProps | null>(null);
 
 const albums = ref<AlbumViewProps[]>([
