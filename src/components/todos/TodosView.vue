@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import TodoItem from './TodoItem.vue';
 import GoHome from '../GoHome.vue';
 import { useStore } from 'vuex';

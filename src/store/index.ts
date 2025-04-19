@@ -8,7 +8,7 @@ export default createStore({
   },
   plugins: [
     createPersistedState({
-      paths: ['user.users', 'user.selectedUser', 'user.userTodos']
+      paths: ['user.users', 'user.userTodos, user.userPosts, user.userComments']
     })
   ]
 });

@@ -10,13 +10,13 @@ export interface BaseImageProps {
 export interface PostViewProps {
   id: number;
   title: string;
-  content: string;
+  body: string;
 }
 
 export interface PostDetailProps {
   id: number;
   title: string;
-  content: string;
+  body: string;
 }
 
 export interface AlbumViewProps {

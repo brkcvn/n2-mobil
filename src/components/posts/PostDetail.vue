@@ -4,7 +4,8 @@
 
         <div class="bg-white rounded-3xl w-full lg:max-w-5xl relative z-10">
             <div class="flex items-center justify-between p-4 lg:p-8 pb-3 lg:pb-6">
-                <h2 class="text-lg lg:text-2xl font-medium text-primary_black tracking-wide">{{ post.title }}</h2>
+                <h2 class="text-lg lg:text-2xl font-medium text-primary_black tracking-wide capitalize">{{ post.title }}
+                </h2>
                 <div @click="closeDetail" class="cursor-pointer">
                     <CloseIcon />
                 </div>
@@ -13,7 +14,8 @@
             <div
                 class="max-h-[600px] flex flex-col lg:flex-row items-start lg:divide-x lg:divide-primary_light_gray post-modal overflow-y-auto lg:overflow-auto">
                 <div class="post-modal w-full lg:max-h-[500px] lg:w-1/2 px-4 lg:px-8 lg:overflow-y-auto mb-5 lg:mb-10">
-                    <p class="text-sm text-opacity-70 text-black tracking-wide leading-relaxed">{{ post.content }}</p>
+                    <p class="text-sm text-opacity-70 text-black tracking-wide leading-relaxed capitalize">{{ post.body
+                        }}</p>
                 </div>
 
                 <div class="post-modal w-full lg:max-h-[500px] lg:w-1/2 px-4 lg:px-8 lg:overflow-y-auto">
@@ -79,16 +81,32 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, onMounted, computed, watch } from 'vue';
+import { useStore } from 'vuex';
 import CloseIcon from '../icons/CloseIcon.vue';
 import type { PostDetailProps } from '../../types';
 
-
-
-defineProps<{
+const { isOpen, post } = defineProps<{
     isOpen: boolean;
     post: PostDetailProps;
 }>();
+
+const store = useStore();
+const comments = computed(() => store.getters['user/getUserComments']);
+
+onMounted(() => {
+    fetchCommentsForPost();
+
+});
+
+const fetchCommentsForPost = async () => {
+    try {
+        await store.dispatch('user/fetchCommentsByPostId', post.id);
+    } catch (err) {
+        console.error('Error fetching comments:', err);
+    } finally {
+    }
+};
 
 const emit = defineEmits<{
     (e: 'close'): void

@@ -44,8 +44,32 @@ export default {
                 completed: todo?.completed,
             }));
         },
-        getUserPosts: (state: StateProps) => state.userPosts,
-        getUserComments: (state: StateProps) => state.userComments,
+        getUserPosts: (state: StateProps) => {
+            if (!state.userPosts || state.userPosts.length === 0) {
+                return [];
+            }
+
+            return state.userPosts.map((post) => ({
+                userId: post?.userId,
+                id: post?.id,
+                title: post?.title,
+                body: post?.body,
+            }));
+        },
+        getUserComments: (state: StateProps) => {
+            if (!state.userComments || state.userComments.length === 0) {
+                return [];
+            }
+            console.log('getUserComments', state.userComments);
+
+            return state.userComments.map((comment) => ({
+                postId: comment?.postId,
+                id: comment?.id,
+                name: comment?.name,
+                email: comment?.email,
+                body: comment?.body,
+            }));
+        },
         getUserAlbums: (state: StateProps) => state.userAlbums,
         isLoading: (state: StateProps) => state.loading,
         getError: (state: StateProps) => state.error
@@ -113,12 +137,12 @@ export default {
             }
         },
 
-        async fetchUserPosts({ commit, state }) {
-            if (!state.selectedUser) return;
-
+        async fetchUserPostsByUserId({ commit }, userId) {
             try {
                 commit('SET_LOADING', true);
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${state.selectedUser.id}`);
+                commit('SET_ERROR', null);
+
+                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`);
                 commit('SET_USER_POSTS', response.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch user posts');
@@ -128,26 +152,13 @@ export default {
             }
         },
 
-        async fetchUserComments({ commit, state }) {
-            if (!state.selectedUser) return;
-
+        async fetchCommentsByPostId({ commit }, postId) {
             try {
                 commit('SET_LOADING', true);
-                const postsResponse = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${state.selectedUser.id}`);
-                const postIds = postsResponse.data.map((post: PostProps) => post.id);
+                commit('SET_ERROR', null);
 
-                if (postIds.length === 0) {
-                    commit('SET_USER_COMMENTS', []);
-                    return;
-                }
-
-                let allComments: Comment[] = [];
-                for (const postId of postIds) {
-                    const commentsResponse = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
-                    allComments = [...allComments, ...commentsResponse.data];
-                }
-
-                commit('SET_USER_COMMENTS', allComments);
+                const response = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
+                commit('SET_USER_COMMENTS', response.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch user comments');
                 console.error('Error fetching user comments:', error);
