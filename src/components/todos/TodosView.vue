@@ -20,10 +20,6 @@ const route = useRoute();
 const userId = computed(() => route.params.id);
 const todos = computed(() => store.getters['user/getUserTodos']);
 
-onMounted(async () => {
-    await fetchTodosForUser();
-});
-
 const fetchTodosForUser = async () => {
     try {
         await store.dispatch('user/fetchUserTodosByUserId', userId?.value);
@@ -31,6 +27,10 @@ const fetchTodosForUser = async () => {
         console.error('Error fetching todos:', err);
     }
 };
+
+onMounted(async () => {
+    await fetchTodosForUser();
+});
 
 const toggleTodoStatus = (todoId: number) => {
     store.dispatch('user/toggleTodoStatus', todoId);

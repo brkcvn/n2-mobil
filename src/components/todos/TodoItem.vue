@@ -4,7 +4,7 @@
             :class="{ 'bg-primary_purple border-primary_purple': todo?.completed, 'border-gray-500': !todo?.completed }">
             <CheckIcon v-if="todo.completed" class="text-white w-4 h-4" />
         </div>
-        <p class="text-sm text-gray-700" :class="{ 'line-through': todo?.completed }">
+        <p class="text-sm text-gray-700 capitalize" :class="{ 'line-through': todo?.completed }">
             {{ todo?.title }}
         </p>
     </div>

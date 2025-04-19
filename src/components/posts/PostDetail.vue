@@ -22,55 +22,16 @@
                     <h3 class="font-semibold text-xl text-primary_black mb-5">Comments</h3>
 
                     <div class="space-y-5 lg:space-y-10 mb-5 lg:mb-10">
-                        <div class="flex space-x-4">
+                        <div v-for="comment in comments" :key="comment.id" class="flex space-x-4">
                             <div
                                 class="w-12 h-12 rounded-full bg-gray-200 border border-primary_light_gray overflow-hidden flex-shrink-0">
-                                <!-- <img src="assets/images/avatar1.jpg" alt="Leyla SELİM" class="w-full h-full object-cover"> -->
+                                <BaseImage :src="comment?.avatar" alt="user avatar"
+                                    class="w-full h-full object-cover" />
                             </div>
                             <div>
-                                <h4 class="font-medium text-sm text-primary_black mb-3">Leyla SELİM</h4>
-                                <p class="text-sm text-primary_gray">Curabitur tempor quis eros tempus lacinia.
-                                    Nam
-                                    bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed
-                                    leo
-                                    vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum
-                                    vest...
-                                </p>
-
-                            </div>
-                        </div>
-
-                        <div class="flex space-x-4">
-                            <div
-                                class="w-12 h-12 rounded-full bg-gray-200 border border-primary_light_gray overflow-hidden flex-shrink-0">
-                                <!-- <img src="assets/images/avatar1.jpg" alt="Leyla SELİM" class="w-full h-full object-cover"> -->
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-sm text-primary_black mb-3">Leyla SELİM</h4>
-                                <p class="text-sm text-primary_gray">Curabitur tempor quis eros tempus lacinia.
-                                    Nam
-                                    bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed
-                                    leo
-                                    vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum
-                                    vest...
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex space-x-4">
-                            <div
-                                class="w-12 h-12 rounded-full bg-gray-200 border border-primary_light_gray overflow-hidden flex-shrink-0">
-                                <!-- <img src="assets/images/avatar1.jpg" alt="Leyla SELİM" class="w-full h-full object-cover"> -->
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-sm text-primary_black mb-3">Leyla SELİM</h4>
-                                <p class="text-sm text-primary_gray">Curabitur tempor quis eros tempus lacinia.
-                                    Nam
-                                    bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed
-                                    leo
-                                    vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum
-                                    vest...
-                                </p>
+                                <h4 class="font-medium text-sm text-primary_black mb-3 capitalize">{{ comment?.name }}
+                                </h4>
+                                <p class="text-sm text-primary_gray capitalize">{{ comment?.body }}</p>
                             </div>
                         </div>
                     </div>
@@ -81,10 +42,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, onMounted, computed, watch } from 'vue';
+import { defineProps, defineEmits, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import CloseIcon from '../icons/CloseIcon.vue';
 import type { PostDetailProps } from '../../types';
+import BaseImage from '../BaseImage.vue';
 
 const { isOpen, post } = defineProps<{
     isOpen: boolean;
@@ -94,19 +56,17 @@ const { isOpen, post } = defineProps<{
 const store = useStore();
 const comments = computed(() => store.getters['user/getUserComments']);
 
-onMounted(() => {
-    fetchCommentsForPost();
-
-});
-
-const fetchCommentsForPost = async () => {
+const fetchCommentsForUser = async () => {
     try {
         await store.dispatch('user/fetchCommentsByPostId', post.id);
     } catch (err) {
         console.error('Error fetching comments:', err);
-    } finally {
     }
 };
+
+onMounted(async () => {
+    await fetchCommentsForUser();
+});
 
 const emit = defineEmits<{
     (e: 'close'): void

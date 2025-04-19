@@ -62,20 +62,24 @@ export default {
                 return [];
             }
 
-            return state.userComments.map((comment) => ({
-                postId: comment?.postId,
-                id: comment?.id,
-                name: comment?.name,
-                email: comment?.email,
-                body: comment?.body,
-            }));
+            return state.userComments.map((comment, index) => {
+                return {
+                    postId: comment?.postId,
+                    id: comment?.id,
+                    name: comment?.name,
+                    email: comment?.email,
+                    body: comment?.body,
+                    avatar: `assets/images/user-${(comment?.id % 3 || index % 2) + 1}.png`,
+                }
+
+            });
         },
         getUserAlbums: (state: StateProps) => {
             if (!state.userAlbums || state.userAlbums.length === 0) {
                 return [];
             }
 
-            return state.userAlbums.map((album, index) => {
+            return state.userAlbums.map((album) => {
                 const imageCount = 6
                 const images = [];
 

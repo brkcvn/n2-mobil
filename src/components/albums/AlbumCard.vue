@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <h3 class="text-sm font-normal text-primary_dark_blue truncate">{{ album?.title }}</h3>
+        <h3 class="text-sm font-normal text-primary_dark_blue truncate capitalize">{{ album?.title }}</h3>
     </div>
 </template>
 

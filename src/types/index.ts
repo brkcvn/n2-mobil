@@ -17,6 +17,7 @@ export interface PostDetailProps {
   id: number;
   title: string;
   body: string;
+  avatar: string;
 }
 
 export interface AlbumViewProps {
