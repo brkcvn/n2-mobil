@@ -16,178 +16,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import AlbumCard from './AlbumCard.vue';
 import AlbumDetail from './AlbumDetail.vue';
 import GoHome from '../GoHome.vue';
 import { AlbumViewProps } from '../../types';
 
-const selectedAlbum = ref<AlbumViewProps | null>(null);
+const store = useStore();
+const route = useRoute();
+const userId = computed(() => route.params.id);
+const albums = computed(() => store.getters['user/getUserAlbums']);
 
-const albums = ref<AlbumViewProps[]>([
-    {
-        id: 1,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg',
-            '/assets/albums/album5.jpg',
-            '/assets/albums/album6.jpg'
-        ]
-    },
-    {
-        id: 2,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album5.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album5.jpg',
-            '/assets/albums/album6.jpg',
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album4.jpg'
-        ]
-    },
-    {
-        id: 3,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg',
-            '/assets/albums/album5.jpg',
-            '/assets/albums/album6.jpg',
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album1.jpg'
-        ]
-    },
-    {
-        id: 4,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album6.jpg',
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ]
-    },
-    {
-        id: 5,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg',
-            '/assets/albums/album5.jpg',
-            '/assets/albums/album6.jpg',
-            '/assets/albums/album7.jpg'
-        ]
-    },
-    {
-        id: 6,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg',
-            '/assets/albums/album5.jpg'
-        ]
-    },
-    {
-        id: 7,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album4.jpg',
-            '/assets/albums/album5.jpg',
-            '/assets/albums/album6.jpg',
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg'
-        ]
-    },
-    {
-        id: 8,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album5.jpg',
-            '/assets/albums/album6.jpg',
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg'
-        ]
-    },
-    {
-        id: 9,
-        title: 'Non esse culpa molestiae omnis sed ol...',
-        images: [
-            '/assets/albums/album1.jpg',
-            '/assets/albums/album2.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album4.jpg'
-        ],
-        detailImages: [
-            '/assets/albums/album7.jpg',
-            '/assets/albums/album6.jpg',
-            '/assets/albums/album5.jpg',
-            '/assets/albums/album4.jpg',
-            '/assets/albums/album3.jpg',
-            '/assets/albums/album2.jpg'
-        ]
+const fetchAlbumsForUser = async () => {
+    try {
+        await store.dispatch('user/fetchUserAlbumsByUserId', userId?.value);
+    } catch (err) {
+        console.error('Error fetching albums:', err);
     }
-]);
+};
+
+onMounted(async () => {
+    await fetchAlbumsForUser();
+});
+
+const selectedAlbum = ref<AlbumViewProps | null>(null);
 
 const showAlbumDetail = (album: AlbumViewProps) => {
     selectedAlbum.value = album;

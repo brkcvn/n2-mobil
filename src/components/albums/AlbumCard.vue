@@ -3,20 +3,20 @@
         @click="handleClick">
         <div class="grid grid-cols-2 mb-4">
             <div class="w-full aspect-square overflow-hidden">
-                <BaseImage :src="album.images[0]" alt="Album image" class="w-full h-full object-cover" />
+                <BaseImage :src="album?.images[0]" alt="Album image" class="w-full h-full object-cover" />
             </div>
             <div class="w-full aspect-square overflow-hidden">
-                <BaseImage :src="album.images[1]" alt="Album image" class="w-full h-full object-cover" />
+                <BaseImage :src="album?.images[1]" alt="Album image" class="w-full h-full object-cover" />
             </div>
             <div class="w-full aspect-square overflow-hidden">
-                <BaseImage :src="album.images[2]" alt="Album image" class="w-full h-full object-cover" />
+                <BaseImage :src="album?.images[2]" alt="Album image" class="w-full h-full object-cover" />
             </div>
             <div class="w-full aspect-square overflow-hidden">
-                <BaseImage :src="album.images[3]" alt="Album image" class="w-full h-full object-cover" />
+                <BaseImage :src="album?.images[3]" alt="Album image" class="w-full h-full object-cover" />
             </div>
         </div>
 
-        <h3 class="text-sm font-normal text-primary_dark_blue truncate">{{ album.title }}</h3>
+        <h3 class="text-sm font-normal text-primary_dark_blue truncate">{{ album?.title }}</h3>
     </div>
 </template>
 

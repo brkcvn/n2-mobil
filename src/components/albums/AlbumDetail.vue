@@ -6,7 +6,7 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
-            <div v-for="(image, index) in album.detailImages" :key="index" class="aspect-square overflow-hidden">
+            <div v-for="(image, index) in album.images" :key="index" class="aspect-square overflow-hidden">
                 <BaseImage :src="image" :alt="`Album image ${index + 1}`" class="w-full h-full" />
             </div>
         </div>

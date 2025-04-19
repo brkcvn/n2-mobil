@@ -23,7 +23,6 @@ export interface AlbumViewProps {
   id: number;
   title: string;
   images: string[];
-  detailImages?: string[];
 }
 
 export interface UserProps {
@@ -78,11 +77,11 @@ export interface AlbumProps {
   userId: number;
   id: number;
   title: string;
+  images: string[];
 }
 
 export interface StateProps {
   users: UserProps[];
-  selectedUser: UserProps | null;
   userTodos:  TodoProps[];
   userPosts:  PostProps[];
   userComments: CommentProps[];

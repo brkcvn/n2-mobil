@@ -1,12 +1,13 @@
 import { AlbumProps, StateProps, CommentProps, UserProps, TodoProps, PostProps } from '@/types';
 import axios from 'axios';
 
+const API_URL = 'https://jsonplaceholder.typicode.com';
+
 export default {
     namespaced: true,
 
     state: (): StateProps => ({
         users: [],
-        selectedUser: null,
         userTodos: [],
         userPosts: [],
         userComments: [],
@@ -60,7 +61,6 @@ export default {
             if (!state.userComments || state.userComments.length === 0) {
                 return [];
             }
-            console.log('getUserComments', state.userComments);
 
             return state.userComments.map((comment) => ({
                 postId: comment?.postId,
@@ -70,7 +70,27 @@ export default {
                 body: comment?.body,
             }));
         },
-        getUserAlbums: (state: StateProps) => state.userAlbums,
+        getUserAlbums: (state: StateProps) => {
+            if (!state.userAlbums || state.userAlbums.length === 0) {
+                return [];
+            }
+
+            return state.userAlbums.map((album, index) => {
+                const imageCount = 6
+                const images = [];
+
+                for (let i = 0; i < imageCount; i++) {
+                    images.push(`assets/albums/album-${i + 1}.jpg`);
+                }
+
+                return {
+                    userId: album?.userId,
+                    id: album?.id,
+                    title: album?.title,
+                    images: images,
+                };
+            });
+        },
         isLoading: (state: StateProps) => state.loading,
         getError: (state: StateProps) => state.error
     },
@@ -112,7 +132,7 @@ export default {
             try {
                 commit('SET_LOADING', true);
                 commit('SET_ERROR', null);
-                const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+                const response = await axios.get(`${API_URL}/users`);
                 commit('SET_USERS', response.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch users');
@@ -127,7 +147,7 @@ export default {
                 commit('SET_LOADING', true);
                 commit('SET_ERROR', null);
 
-                const todosResponse = await axios.get(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`);
+                const todosResponse = await axios.get(`${API_URL}/todos?userId=${userId}`);
                 commit('SET_USER_TODOS', todosResponse.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch user todos');
@@ -142,7 +162,7 @@ export default {
                 commit('SET_LOADING', true);
                 commit('SET_ERROR', null);
 
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`);
+                const response = await axios.get(`${API_URL}/posts?userId=${userId}`);
                 commit('SET_USER_POSTS', response.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch user posts');
@@ -157,7 +177,7 @@ export default {
                 commit('SET_LOADING', true);
                 commit('SET_ERROR', null);
 
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
+                const response = await axios.get(`${API_URL}/comments?postId=${postId}`);
                 commit('SET_USER_COMMENTS', response.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch user comments');
@@ -167,12 +187,12 @@ export default {
             }
         },
 
-        async fetchUserAlbums({ commit, state }) {
-            if (!state.selectedUser) return;
-
+        async fetchUserAlbumsByUserId({ commit }, userId) {
             try {
                 commit('SET_LOADING', true);
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/albums?userId=${state.selectedUser.id}`);
+                commit('SET_ERROR', null);
+
+                const response = await axios.get(`${API_URL}/albums?userId=${userId}`);
                 commit('SET_USER_ALBUMS', response.data);
             } catch (error) {
                 commit('SET_ERROR', 'Failed to fetch user albums');
