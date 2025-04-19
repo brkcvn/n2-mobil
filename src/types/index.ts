@@ -11,6 +11,7 @@ export interface PostViewProps {
   id: number;
   title: string;
   body: string;
+  avatar?: string;
 }
 
 export interface PostDetailProps {

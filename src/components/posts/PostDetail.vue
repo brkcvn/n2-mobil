@@ -22,7 +22,7 @@
                     <h3 class="font-semibold text-xl text-primary_black mb-5">Comments</h3>
 
                     <div class="space-y-5 lg:space-y-10 mb-5 lg:mb-10">
-                        <div v-for="comment in comments" :key="comment.id" class="flex space-x-4">
+                        <div v-for="comment in comments" :key="comment.id" class="flex ltr:space-x-4 rtl:space-x-reverse">
                             <div
                                 class="w-12 h-12 rounded-full bg-gray-200 border border-primary_light_gray overflow-hidden flex-shrink-0">
                                 <BaseImage :src="comment?.avatar" alt="user avatar"

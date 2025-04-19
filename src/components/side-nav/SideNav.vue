@@ -24,7 +24,7 @@
           </div>
           <div class="flex flex-col">
             <h3 class="text-sm lg:text-lg font-medium text-primary_black">{{ userName }}</h3>
-            <a :href="`mailto:${userEmail}`" class="text-xs lg:text-sm text-primary_gray border-b-2">{{ userEmail }}</a>
+            <a :href="`mailto:${userEmail}`" class="text-xs lg:text-sm text-primary_gray border-b-2 break-all">{{ userEmail }}</a>
           </div>
         </div>
         <div class="border-b border-primary_light_gray"></div>

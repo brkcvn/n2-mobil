@@ -8,7 +8,7 @@
         </div>
         <div class="flex items-center mt-3 gap-x-3 lg:gap-x-6 cursor-pointer" @click="showPostDetail">
             <span class="text-sm font-medium text-primary_black cursor-pointer">See More</span>
-            <ArrowRightIcon class="w-8 h-8 text-primary_purple" />
+            <ArrowRightIcon class="w-8 h-8 text-primary_purple rtl:rotate-180" />
         </div>
 
         <PostDetail v-if="isDetailOpen" :isOpen="isDetailOpen" :post="postData" @close="closePostDetail" />
@@ -28,7 +28,8 @@ const isDetailOpen = ref(false);
 const postData = computed(() => ({
     id: props.id,
     title: props.title,
-    body: props.body
+    body: props.body,
+    avatar: props.avatar,
 }));
 
 const showPostDetail = () => {
