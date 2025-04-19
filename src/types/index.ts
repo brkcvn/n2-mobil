@@ -88,6 +88,5 @@ export interface StateProps {
   userPosts:  PostProps[];
   userComments: CommentProps[];
   userAlbums: AlbumProps[];
-  loading: boolean;
   error: string | null;
 }

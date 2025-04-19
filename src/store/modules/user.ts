@@ -1,7 +1,5 @@
 import { AlbumProps, StateProps, CommentProps, UserProps, TodoProps, PostProps } from '@/types';
-import axios from 'axios';
-
-const API_URL = 'https://jsonplaceholder.typicode.com';
+import { apiService } from '../../api/apiService';
 
 export default {
     namespaced: true,
@@ -12,7 +10,6 @@ export default {
         userPosts: [],
         userComments: [],
         userAlbums: [],
-        loading: false,
         error: null
     }),
 
@@ -71,7 +68,6 @@ export default {
                     body: comment?.body,
                     avatar: `assets/images/user-${(comment?.id % 3 || index % 2) + 1}.png`,
                 }
-
             });
         },
         getUserAlbums: (state: StateProps) => {
@@ -95,7 +91,6 @@ export default {
                 };
             });
         },
-        isLoading: (state: StateProps) => state.loading,
         getError: (state: StateProps) => state.error
     },
 
@@ -115,9 +110,6 @@ export default {
         SET_USER_ALBUMS(state: StateProps, albums: AlbumProps[]) {
             state.userAlbums = albums;
         },
-        SET_LOADING(state: StateProps, loading: boolean) {
-            state.loading = loading;
-        },
         SET_ERROR(state: StateProps, error: string | null) {
             state.error = error;
         },
@@ -132,78 +124,58 @@ export default {
     },
 
     actions: {
-        async fetchUsers({ commit }) {
+        async fetchData({ commit }, { apiMethod, mutationType, errorMessage }) {
             try {
-                commit('SET_LOADING', true);
                 commit('SET_ERROR', null);
-                const response = await axios.get(`${API_URL}/users`);
-                commit('SET_USERS', response.data);
+
+                const data = await apiMethod();
+                commit(mutationType, data);
+
+                return data;
             } catch (error) {
-                commit('SET_ERROR', 'Failed to fetch users');
-                console.error('Error fetching users:', error);
-            } finally {
-                commit('SET_LOADING', false);
+                commit('SET_ERROR', errorMessage);
+                console.error(errorMessage, error);
             }
         },
 
-        async fetchUserTodosByUserId({ commit }, userId) {
-            try {
-                commit('SET_LOADING', true);
-                commit('SET_ERROR', null);
-
-                const todosResponse = await axios.get(`${API_URL}/todos?userId=${userId}`);
-                commit('SET_USER_TODOS', todosResponse.data);
-            } catch (error) {
-                commit('SET_ERROR', 'Failed to fetch user todos');
-                console.error('Error fetching user todos:', error);
-            } finally {
-                commit('SET_LOADING', false);
-            }
+        async fetchUsers({ dispatch }) {
+            return dispatch('fetchData', {
+                apiMethod: apiService.fetchUsers,
+                mutationType: 'SET_USERS',
+                errorMessage: 'Failed to fetch users'
+            });
         },
 
-        async fetchUserPostsByUserId({ commit }, userId) {
-            try {
-                commit('SET_LOADING', true);
-                commit('SET_ERROR', null);
-
-                const response = await axios.get(`${API_URL}/posts?userId=${userId}`);
-                commit('SET_USER_POSTS', response.data);
-            } catch (error) {
-                commit('SET_ERROR', 'Failed to fetch user posts');
-                console.error('Error fetching user posts:', error);
-            } finally {
-                commit('SET_LOADING', false);
-            }
+        async fetchUserTodosByUserId({ dispatch }, userId) {
+            return dispatch('fetchData', {
+                apiMethod: () => apiService.fetchUserTodos(userId),
+                mutationType: 'SET_USER_TODOS',
+                errorMessage: 'Failed to fetch user todos'
+            });
         },
 
-        async fetchCommentsByPostId({ commit }, postId) {
-            try {
-                commit('SET_LOADING', true);
-                commit('SET_ERROR', null);
-
-                const response = await axios.get(`${API_URL}/comments?postId=${postId}`);
-                commit('SET_USER_COMMENTS', response.data);
-            } catch (error) {
-                commit('SET_ERROR', 'Failed to fetch user comments');
-                console.error('Error fetching user comments:', error);
-            } finally {
-                commit('SET_LOADING', false);
-            }
+        async fetchUserPostsByUserId({ dispatch }, userId) {
+            return dispatch('fetchData', {
+                apiMethod: () => apiService.fetchUserPosts(userId),
+                mutationType: 'SET_USER_POSTS',
+                errorMessage: 'Failed to fetch user posts'
+            });
         },
 
-        async fetchUserAlbumsByUserId({ commit }, userId) {
-            try {
-                commit('SET_LOADING', true);
-                commit('SET_ERROR', null);
+        async fetchCommentsByPostId({ dispatch }, postId) {
+            return dispatch('fetchData', {
+                apiMethod: () => apiService.fetchPostComments(postId),
+                mutationType: 'SET_USER_COMMENTS',
+                errorMessage: 'Failed to fetch comments'
+            });
+        },
 
-                const response = await axios.get(`${API_URL}/albums?userId=${userId}`);
-                commit('SET_USER_ALBUMS', response.data);
-            } catch (error) {
-                commit('SET_ERROR', 'Failed to fetch user albums');
-                console.error('Error fetching user albums:', error);
-            } finally {
-                commit('SET_LOADING', false);
-            }
+        async fetchUserAlbumsByUserId({ dispatch }, userId) {
+            return dispatch('fetchData', {
+                apiMethod: () => apiService.fetchUserAlbums(userId),
+                mutationType: 'SET_USER_ALBUMS',
+                errorMessage: 'Failed to fetch user albums'
+            });
         },
 
         async toggleTodoStatus({ commit }, todoId: number) {
