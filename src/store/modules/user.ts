@@ -1,6 +1,19 @@
 import { AlbumProps, StateProps, CommentProps, UserProps, TodoProps, PostProps } from '@/types';
 import { apiService } from '../../api/apiService';
 
+const TODO_UPDATES_KEY = 'user_todo_updates';
+
+const getStoredTodoUpdates = (): Record<number, boolean> => {
+    const stored = localStorage.getItem(TODO_UPDATES_KEY);
+    return stored ? JSON.parse(stored) : {};
+};
+
+const saveTodoUpdates = (todoId: number, completed: boolean) => {
+    const updates = getStoredTodoUpdates();
+    updates[todoId] = completed;
+    localStorage.setItem(TODO_UPDATES_KEY, JSON.stringify(updates));
+};
+
 export default {
     namespaced: true,
 
@@ -35,12 +48,19 @@ export default {
                 return [];
             }
 
-            return state.userTodos.map((todo) => ({
-                userId: todo?.userId,
-                id: todo?.id,
-                title: todo?.title,
-                completed: todo?.completed,
-            }));
+            const todoUpdates = getStoredTodoUpdates();
+
+            return state.userTodos.map((todo) => {
+                const todoId = todo.id;
+                const completed = todoId in todoUpdates ? todoUpdates[todoId] : todo?.completed;
+
+                return {
+                    userId: todo?.userId,
+                    id: todo?.id,
+                    title: todo?.title,
+                    completed: completed,
+                };
+            });
         },
         getUserPosts: (state: StateProps) => {
             if (!state.userPosts || state.userPosts.length === 0) {
@@ -116,7 +136,9 @@ export default {
         TOGGLE_TODO_STATUS(state: StateProps, todoId: number) {
             state.userTodos = state.userTodos.map(todo => {
                 if (todo.id === todoId) {
-                    return { ...todo, completed: !todo.completed };
+                    const newStatus = !todo.completed;
+                    saveTodoUpdates(todoId, newStatus);
+                    return { ...todo, completed: newStatus };
                 }
                 return todo;
             });
